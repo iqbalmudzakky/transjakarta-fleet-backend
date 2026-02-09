@@ -1,0 +1,32 @@
+# version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: tj_postgres
+    environment:
+      POSTGRES_USER: tj_user
+      POSTGRES_PASSWORD: tj_pass
+      POSTGRES_DB: tj_fleet
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: tj_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: tj_mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+volumes:
+  pgdata:
