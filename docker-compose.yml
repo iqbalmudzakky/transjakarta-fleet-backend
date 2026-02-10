@@ -19,6 +19,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mosquitto:
     image: eclipse-mosquitto:2
@@ -45,9 +50,12 @@ services:
     env_file:
       - .env
     depends_on:
-      - postgres
-      - rabbitmq
-      - mosquitto
+      postgres:
+        condition: service_started
+      mosquitto:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
     command: ["/bin/mqtt-subscriber"]
 
   worker:
@@ -56,7 +64,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     command: ["/bin/worker"]
 
 volumes:
