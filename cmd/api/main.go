@@ -26,7 +26,7 @@ func main() {
 	app.Get("/vehicles/:vehicle_id/location", handler.GetLatestLocation)
 	app.Get("/vehicles/:vehicle_id/history", handler.GetLocationHistory)
 
-	port := os.Getenv("APP_PORT")
+	port := os.Getenv("API_PORT")
 	if port == "" {
 		port = "3000"
 	}

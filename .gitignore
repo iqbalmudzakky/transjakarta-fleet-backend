@@ -6,6 +6,8 @@
 
 # Env
 .env
+.env.local
+.env.docker
 
 # IDE
 .vscode/

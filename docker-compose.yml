@@ -28,5 +28,36 @@ services:
     volumes:
       - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
+  api:
+    build: .
+    container_name: tj_api
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    ports:
+      - "${API_PORT}:3000"
+    command: ["/bin/api"]
+
+  mqtt-subscriber:
+    build: .
+    container_name: tj_mqtt_subscriber
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - rabbitmq
+      - mosquitto
+    command: ["/bin/mqtt-subscriber"]
+
+  worker:
+    build: .
+    container_name: tj_worker
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+    command: ["/bin/worker"]
+
 volumes:
   pgdata:

@@ -68,3 +68,12 @@ func (r *LocationRepository) GetLocationHistory(vehicleID string, start, end int
 
 	return results, nil
 }
+
+func (r *LocationRepository) InsertLocation(loc *models.VehicleLocation) error {
+	query := `
+		INSERT INTO vehicle_locations (vehicle_id, latitude, longitude, timestamp)
+		VALUES ($1, $2, $3, $4)
+	`
+	_, err := r.DB.Exec(query, loc.VehicleID, loc.Latitude, loc.Longitude, loc.Timestamp)
+	return err
+}
