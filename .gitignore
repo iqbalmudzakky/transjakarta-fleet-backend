@@ -17,3 +17,9 @@ Thumbs.db
 
 # docs
 notes-go-guide.md
+
+# Logs
+*.log
+
+# Temporary files
+tmp/

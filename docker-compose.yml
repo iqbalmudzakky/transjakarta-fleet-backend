@@ -5,9 +5,9 @@ services:
     image: postgres:16
     container_name: tj_postgres
     environment:
-      POSTGRES_USER: tj_user
-      POSTGRES_PASSWORD: tj_pass
-      POSTGRES_DB: tj_fleet
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
