@@ -55,5 +55,10 @@ func (h *locationHandler) GetLocationHistory(c *fiber.Ctx) error {
 		})
 	}
 
+	if len(loc) == 0 {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "No location history found",
+		})
+	}
 	return c.Status(fiber.StatusOK).JSON(loc)
 }
